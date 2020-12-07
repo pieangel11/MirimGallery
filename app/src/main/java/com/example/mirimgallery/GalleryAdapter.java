@@ -2,11 +2,14 @@ package com.example.mirimgallery;
 
 import android.content.Context;
 import android.view.MotionEvent;
+import android.view.VerifiedInputEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class GalleryAdapter extends BaseAdapter {
     int[] imgRes = {R.drawable.poster01, R.drawable.poster02, R.drawable.poster03, R.drawable.poster04, R.drawable.poster05,
@@ -16,6 +19,10 @@ public class GalleryAdapter extends BaseAdapter {
     };
     Context context;
     ImageView imgvMain;
+    String[] posterTitles = {"스파이더맨", "백두산", "Eclipse", "라라랜드", "반도", "기생충", "레미제라블",
+            "위대한 쇼맨", "SKYSCRAPER", "신과 함께", "친절한 금자씨", "A Hard Day", "라붐",
+            "유콜잇러브", "Brave Heart", "포레스트 검프", "스파이더맨", "백두산", "Eclipse", "라라랜드"
+    };
 
     public GalleryAdapter(Context context, ImageView imgvMain){
         this.context = context;
@@ -44,6 +51,8 @@ public class GalleryAdapter extends BaseAdapter {
         imgv.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imgv.setPadding(5, 5, 5, 5);
         imgv.setImageResource(imgRes[position]);
+        final View toastView = View.inflate(context, R.layout.toast, null);
+        final TextView textTile = toastView.findViewById(R.id.text_title);
 
         final int pos = position;
         imgv.setOnTouchListener(new View.OnTouchListener(){
@@ -51,6 +60,10 @@ public class GalleryAdapter extends BaseAdapter {
            public boolean onTouch(View v, MotionEvent event) {
                imgvMain.setScaleType(ImageView.ScaleType.FIT_CENTER);
                imgvMain.setImageResource(imgRes[pos]);
+               Toast toast = new Toast(context);
+               textTile.setText(posterTitles[pos]);
+               toast.setView(toastView);
+               toast.show();
                return false;
            }
         });
